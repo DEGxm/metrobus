@@ -55,7 +55,6 @@ def get_available_units():
 
             if datetime_object < datetime.utcnow() + timedelta(seconds=-20):
                 available.append(s['fields']['vehicle_id'])
-                #print(s['fields']['geographic_point'])
         except Exception as e:
             print(e)
     output['data'] = available
@@ -78,7 +77,6 @@ def get_unit_history(unit_id):
             data['trip_start_date'] = s['fields']['trip_start_date']
             data['geographic_point'] = s['fields']['geographic_point']
             Data.append(data)
-        #        print(s['record_timestamp'],s['fields']['trip_start_date'],s['fields']['geographic_point'])
         except Exception as e:
             print(e)
     output['data'] = Data
@@ -97,9 +95,6 @@ def get_buroughs():
     for s in collection.find():
         try:
             names.append(s['name'])
-        #            print(s['polygon'])
-        #            for i in s['polygon']:
-        #                print('yolo',tuple(i))
         except Exception as e:
             print(e)
     output['data'] = names
@@ -108,7 +103,6 @@ def get_buroughs():
 
 @app.route('/disponible_alcaldia/<alcaldia>', methods=['GET'])
 def get_units_in_burough(alcaldia):
-    #print(alcaldia)
     location = mongo.db.location
     output = {
         'status': 200,
@@ -161,7 +155,6 @@ def get_units_in_burough(alcaldia):
     Available = []
     A = [i[0] for i in alcaldias]
     B = A.index(alcaldia)
-    #  print('wolololo',alcaldias[B][0])
     for t in available:
         point = Point(t[1][1], t[1][0])
         poly = Polygon(alcaldias[B][1])
